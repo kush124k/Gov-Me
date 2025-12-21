@@ -9,7 +9,11 @@ app = FastAPI(title="Gov&Me Tax Portal")
 # FIX: Add CORS Middleware so the browser doesn't block the request
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://gov-me.vercel.app/"], # Next.js default port
+    allow_origins=[
+        "https://gov-me.vercel.app",  # Removed the trailing slash
+        "http://localhost:3000",      # Add local Next.js dev port
+        "http://127.0.0.1:3000",
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
