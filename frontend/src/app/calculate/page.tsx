@@ -72,7 +72,7 @@ export default function CalculationPage() {
         <Card className="bg-zinc-900 text-white p-8 shadow-2xl border-none flex flex-col justify-between">
           <div>
             <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest">Total Duty Calculated</p>
-            <h2 className="text-8xl font-black mt-4 tracking-tighter">₹{tax !== null ? tax.toLocaleString('en-IN') : "0"}</h2>
+            <h2 className="text-6xl font-black mt-4 tracking-tighter">₹{tax !== null ? tax.toLocaleString('en-IN') : "0"}</h2>
           </div>
           <div className="pt-8 border-t border-zinc-800">
             <p className="text-zinc-400 text-sm italic">"Your fiscal duty fuels the nation. Next, we check your rights."</p>
