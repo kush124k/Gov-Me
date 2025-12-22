@@ -3,6 +3,9 @@ from fastapi import FastAPI
 from app.services.tax_engine import calculate_tax_with_relief 
 from fastapi.middleware.cors import CORSMiddleware
 
+# Import both services
+from app.services.tax_engine import calculate_tax_with_relief 
+from app.services.investment_engine import calculate_investment_tax_logic, InvestmentInput
 
 app = FastAPI(title="Gov&Me Tax Portal")
 
@@ -27,6 +30,11 @@ def get_tax(taxable_income: float, category: str, high_turnover: bool = False ):
     result = calculate_tax_with_relief(taxable_income, category, high_turnover)
     return {"tax_details": result}
 
+# NEW: Clean Investment Route
+@app.post("/services/investment_tax")
+def get_investment_tax(data: InvestmentInput):
+    # All logic happens in the imported service
+    return calculate_investment_tax_logic(data)
 
 if __name__ == "__main__":
     import uvicorn

@@ -17,13 +17,13 @@ export function GlobalNav() {
     <div className="fixed top-6 right-6 z-50">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="icon" className="rounded-full shadow-lg bg-white hover:bg-zinc-100 border-zinc-200">
+          <Button variant="outline" size="icon" className="rounded-full shadow-neutral-600 bg-white hover:bg-zinc-100 border-zinc-200">
             <MoreVertical className="h-5 w-5 text-zinc-600" />
             <span className="sr-only">Toggle menu</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56 mt-2">
-          <DropdownMenuLabel className="text-zinc-500 font-bold text-xs uppercase tracking-wider">
+          <DropdownMenuLabel className="text-zinc-600 font-extrabold font-mono font-stretch-expanded text-2xl uppercase tracking-wider">
             Navigation
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -36,7 +36,13 @@ export function GlobalNav() {
 
           <DropdownMenuItem asChild>
             <Link href="/calculate" className="flex items-center gap-2 cursor-pointer py-2">
-              <Calculator className="h-4 w-4" /> Tax Engine
+              <Calculator className="h-4 w-4" /> Tax Calculator
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem asChild>
+            <Link href="/investments" className="flex items-center gap-2 cursor-pointer py-2">
+              <Calculator className="h-4 w-4" /> Investment Analysis
             </Link>
           </DropdownMenuItem>
 
