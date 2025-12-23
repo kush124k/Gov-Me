@@ -31,9 +31,9 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <Link href="/calculate">
+          <Link href="/financial-diary">
             <Button size="lg" className="bg-white text-black hover:bg-zinc-200 rounded-full px-8 h-14 text-lg font-bold mt-4 transition-all hover:scale-105">
-              Launch Analysis Engine →
+              Launch Financial Diary →
             </Button>
           </Link>
            <Link href="/schemes">

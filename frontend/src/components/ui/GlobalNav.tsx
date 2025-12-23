@@ -35,6 +35,12 @@ export function GlobalNav() {
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
+            <Link href="/financial-diary" className="flex items-center gap-2 cursor-pointer py-2">
+              <FileText className="h-4 w-4" /> Financial Diary
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem asChild>
             <Link href="/calculate" className="flex items-center gap-2 cursor-pointer py-2">
               <Calculator className="h-4 w-4" /> Tax Calculator
             </Link>
