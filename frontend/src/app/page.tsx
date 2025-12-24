@@ -42,6 +42,12 @@ export default function LandingPage() {
             </Button>
           </Link>
 
+           <Link href="/policy-impact">
+            <Button size="lg" className="bg-white text-black hover:bg-zinc-200 rounded-full px-8 h-14 text-lg font-bold mt-4 transition-all hover:scale-105">
+                Policy Impact →
+            </Button>
+          </Link>   
+
         </div>
 
         {/* Right Side: The "Bullshit" Summary (Accordion Style) */}
