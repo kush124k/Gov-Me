@@ -33,12 +33,18 @@ export default function LandingPage() {
 
           <Link href="/financial-diary">
             <Button size="lg" className="bg-white text-black hover:bg-zinc-200 rounded-full px-8 h-14 text-lg font-bold mt-4 transition-all hover:scale-105">
-              Launch Financial Diary →
+              Check Financial Diary →
             </Button>
           </Link>
            <Link href="/schemes">
             <Button size="lg" className="bg-white text-black hover:bg-zinc-200 rounded-full px-8 h-14 text-lg font-bold mt-4 transition-all hover:scale-105">
                 Open Scheme Finder →
+            </Button>
+          </Link>
+
+          <Link href="/calculate">
+            <Button size="lg" className="bg-white text-black hover:bg-zinc-200 ml-1 rounded-full px-8 h-14 text-lg font-bold mt-4 transition-all hover:scale-105">
+               Launch Tax Engine →
             </Button>
           </Link>
 
