@@ -1,78 +1,63 @@
 'use client'
 
 import Link from "next/link"
-import { MoreVertical, Home, Calculator, Briefcase, FileText, Settings } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { usePathname } from "next/navigation" // Optional: to highlight active page
+import { Home, Calculator, Briefcase, FileText, Settings, TrendingUp } from "lucide-react"
+import { cn } from "@/lib/utils" // Ensure you have this utility, or remove 'cn' usage
 
 export function GlobalNav() {
+  const pathname = usePathname();
+
+  const links = [
+    { name: "Home", href: "/", icon: Home },
+    { name: "Financial Diary", href: "/financial-diary", icon: FileText },
+    { name: "Tax Calculator", href: "/calculate", icon: Calculator },
+    { name: "Investment Analysis", href: "/investments", icon: TrendingUp },
+    { name: "Gov Subsidies", href: "/schemes", icon: Briefcase },
+    { name: "Policy Impact", href: "/policy-impact", icon: FileText },
+    { name: "About Site", href: "/About Site", icon: Settings },
+  ];
+
   return (
-    <div className="fixed top-6 right-6 z-50">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="icon" className="rounded-full shadow-neutral-600 bg-white hover:bg-zinc-100 border-zinc-200">
-            <MoreVertical className="h-5 w-5 text-zinc-600" />
-            <span className="sr-only">Toggle menu</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56 mt-2">
-          <DropdownMenuLabel className="text-zinc-600 font-extrabold font-mono font-stretch-expanded text-2xl uppercase tracking-wider">
+    <div className="flex flex-col h-full py-6">
+      {/* Header inside the menu */}
+      <div className="px-6 mb-8">
+         <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-widest">
             Navigation
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          
-          <DropdownMenuItem asChild>
-            <Link href="/" className="flex items-center gap-2 cursor-pointer py-2">
-              <Home className="h-4 w-4" /> Home
-            </Link>
-          </DropdownMenuItem>
+         </h2>
+      </div>
 
-          <DropdownMenuItem asChild>
-            <Link href="/financial-diary" className="flex items-center gap-2 cursor-pointer py-2">
-              <FileText className="h-4 w-4" /> Financial Diary
-            </Link>
-          </DropdownMenuItem>
+      {/* Navigation Links */}
+      <nav className="flex flex-col space-y-1 px-3">
+        {links.map((link) => {
+          const Icon = link.icon;
+          const isActive = pathname === link.href;
 
-          <DropdownMenuItem asChild>
-            <Link href="/calculate" className="flex items-center gap-2 cursor-pointer py-2">
-              <Calculator className="h-4 w-4" /> Tax Calculator
+          return (
+            <Link 
+              key={link.href} 
+              href={link.href}
+              className={cn(
+                "flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200",
+                isActive 
+                  ? "bg-blue-600/10 text-blue-500" // Active State
+                  : "text-zinc-400 hover:text-white hover:bg-zinc-900" // Inactive State
+              )}
+            >
+              <Icon className={cn("w-5 h-5", isActive ? "text-blue-500" : "text-zinc-500 group-hover:text-white")} />
+              {link.name}
             </Link>
-          </DropdownMenuItem>
+          )
+        })}
+      </nav>
 
-          <DropdownMenuItem asChild>
-            <Link href="/investments" className="flex items-center gap-2 cursor-pointer py-2">
-              <Calculator className="h-4 w-4" /> Investment Analysis
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem asChild>
-            <Link href="/schemes" className="flex items-center gap-2 cursor-pointer py-2">
-              <Briefcase className="h-4 w-4" /> Gov Subsidies & Schemes
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem asChild>
-            <Link href="/policy-impact" className="flex items-center gap-2 cursor-pointer py-2">
-              <FileText className="h-4 w-4" /> Policy Impact
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuSeparator />
-          
-          <DropdownMenuItem asChild>
-            <Link href="/About Site" className="flex items-center gap-2 cursor-pointer py-2">
-              <Settings className="h-4 w-4" /> About Site
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      {/* Optional: Footer or user profile at bottom */}
+      <div className="mt-auto px-6 pt-6 border-t border-zinc-900">
+         <p className="text-xs text-zinc-600">
+            © 2025 Gov&Me <br/> 
+            Manipal Institute of Technology
+         </p>
+      </div>
     </div>
   )
 }
