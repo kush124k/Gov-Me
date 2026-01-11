@@ -1,4 +1,3 @@
-//npx shadcn@latest add tabs card badge progress separator
 "use client";
 
 import { useState } from "react";
@@ -298,7 +297,7 @@ export default function TaxPlanner() {
 
                 {/* 2. DEEP DIVE TABS */}
                 <Tabs defaultValue="strategy" className="w-full">
-                  <TabsList className="grid w-full md:w-[600px] grid-cols-3 mb-6 bg-slate-100 p-1">
+                  <TabsList className="grid w-full md:w-150 grid-cols-3 mb-6 bg-slate-100 p-1">
                     <TabsTrigger value="strategy">Strategy</TabsTrigger>
                     <TabsTrigger value="shield">Tax Shield</TabsTrigger>
                     <TabsTrigger value="breakdown">Detailed Table</TabsTrigger>
