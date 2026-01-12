@@ -237,9 +237,17 @@ export default function SchemesPage() {
                   <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block mb-1">
                     {scheme.type} • {scheme.category ? scheme.category.split(',')[0] : 'General'}
                   </span>
-                  <CardTitle className="text-xl font-extrabold text-zinc-900 leading-tight">
-                    {scheme.name}
-                  </CardTitle>
+                  {scheme.url ? (
+                    <Link href={scheme.url} target="_blank">
+                      <CardTitle className="text-xl font-extrabold text-zinc-900 leading-tight hover:underline">
+                      {scheme.name}
+                      </CardTitle>
+                    </Link>
+                      ) : (
+  <CardTitle className="text-xl font-extrabold text-zinc-900 leading-tight">
+    {scheme.name}
+  </CardTitle>
+)}
                 </CardHeader>
                 <CardContent className="grow space-y-5">
                   <p className="text-sm text-zinc-600 leading-relaxed font-medium italic">
