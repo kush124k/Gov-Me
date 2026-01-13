@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 .venv/
 site1/              # Your specific virtual environment
-.env
+.env.local
 .pytest_cache/
 
 # --- Node / Next.js ---
