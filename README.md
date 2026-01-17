@@ -35,16 +35,3 @@ This project follows a modern, decoupled architecture:
 * **Data Processing:** Pandas, NumPy
 * **AI/NLP:** (OpenAI API / LangChain / NLTK)
 
-## 🚀 Getting Started
-
-Follow these steps to set up the project locally.
-
-### Prerequisites
-* Node.js (v18+)
-* Python (v3.10+)
-* Git
-
-### 1. Clone the Repository
-```bash
-git clone [https://github.com/your-username/gov-me.git](https://github.com/your-username/gov-me.git)
-cd gov-me
