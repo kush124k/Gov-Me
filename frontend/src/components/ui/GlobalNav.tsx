@@ -15,7 +15,7 @@ export function GlobalNav() {
     { name: "Investment Analysis", href: "/investments", icon: TrendingUp },
     { name: "Gov Subsidies", href: "/schemes", icon: Briefcase },
     { name: "Policy Impact", href: "/policy-impact", icon: FileText },
-    { name: "About Site", href: "/About Site", icon: Settings },
+    { name: "About Site", href: "/About-Site", icon: Settings },
   ];
 
   return (

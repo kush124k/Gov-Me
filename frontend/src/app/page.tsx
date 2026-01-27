@@ -40,39 +40,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-black text-white font-sans selection:bg-blue-900 selection:text-white">
       
-{/* --- NAVBAR --- */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12 backdrop-blur-md bg-black/60 border-b border-white/5">
-        
-        {/* LEFT SIDE: Logo & Brand */}
-        <div className="flex items-center gap-3">
-           <div className="bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-[0_0_15px_rgba(37,99,235,0.5)]">
-             G
-           </div>
-           <span className="text-xl font-bold tracking-tight">Gov&Me</span>
-        </div>
-        
-        {/* RIGHT SIDE: Menu Trigger & Sidebar */}
-        <Sheet>
-          {/* The Button that you click */}
-          <SheetTrigger asChild>
-             <Button variant="ghost" className="text-zinc-400 hover:text-white hover:bg-zinc-800 gap-2 rounded-full px-4">
-                Menu <Menu className="w-5 h-5" />
-             </Button>
-          </SheetTrigger>
 
-          {/* The Sidebar that slides out */}
-          <SheetContent 
-             side="right" 
-             className="w-75 sm:w-100 bg-black text-white border-l border-zinc-800 p-0"
-          >
-             {/* The actual links component inside the sidebar */}
-             <div className="h-full px-2">
-                 <GlobalNav />
-             </div>
-          </SheetContent>
-        </Sheet>
-        
-      </nav>
       <main className="flex flex-col items-center justify-center">
         
         {/* --- HERO SECTION --- */}
