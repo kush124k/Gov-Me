@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/button";
 const InfoTooltip = ({ text }: { text: string }) => (
   <div className="group relative inline-flex items-center ml-1.5 align-middle">
     <Info className="w-3.5 h-3.5 text-slate-400 hover:text-slate-600 cursor-help transition-colors" />
-    <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-2.5 bg-slate-900 text-white text-xs rounded-lg shadow-xl z-[100] transition-all duration-200 pointer-events-none text-center leading-relaxed">
+    <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-2.5 bg-slate-900 text-white text-xs rounded-lg shadow-xl z-100 transition-all duration-200 pointer-events-none text-center leading-relaxed">
       {text}
       <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-900" />
     </div>
@@ -132,14 +132,6 @@ export default function InvestmentPage() {
     <div className="min-h-screen bg-slate-50 p-4 font-sans text-slate-900 flex flex-col">
       <div className="max-w-7xl mx-auto w-full space-y-4">
         
-        {/* Back Button */}
-        <div>
-          <Link href="/">
-            <Button variant="ghost" className="pl-0 -ml-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors">
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Home
-            </Button>
-          </Link>
-        </div>
 
         {/* Header */}
         <div className="flex items-center space-x-3 mb-2 px-1">
@@ -332,7 +324,7 @@ export default function InvestmentPage() {
               </div>
             ) : (
               // Empty State
-              <div className="h-full flex flex-col items-center justify-center bg-white rounded-xl border-2 border-dashed border-slate-200 p-12 text-center min-h-[400px]">
+              <div className="h-full flex flex-col items-center justify-center bg-white rounded-xl border-2 border-dashed border-slate-200 p-12 text-center min-h-100">
                 <div className="bg-slate-50 p-4 rounded-full mb-4">
                   <BadgeIndianRupee className="w-8 h-8 text-slate-400" />
                 </div>
