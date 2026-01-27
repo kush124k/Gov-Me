@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { 
   TrendingUp, 
   Calendar, 
@@ -8,7 +9,8 @@ import {
   Info,
   BadgeIndianRupee,
   PieChart,
-  AlertTriangle
+  AlertTriangle,
+  ArrowLeft
 } from "lucide-react";
 import { 
   Card, 
@@ -25,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 // --- Custom Tooltip ---
 const InfoTooltip = ({ text }: { text: string }) => (
@@ -50,12 +53,13 @@ type TaxResult = {
 };
 
 export default function InvestmentPage() {
+  // --- STATE WITH DEFAULTS ---
   const [formData, setFormData] = useState({
     asset_type: "Equity",
-    purchase_price: "",
-    sale_price: "",
-    purchase_date: "",
-    sale_date: ""
+    purchase_price: "100000",    // Default: ₹1 Lakh
+    sale_price: "300000",        // Default: ₹3 Lakhs
+    purchase_date: "2023-01-01", // Default: 2 Years ago (LTCG)
+    sale_date: "2025-01-01"      // Default: Today
   });
   const [result, setResult] = useState<TaxResult | null>(null);
 
@@ -128,6 +132,15 @@ export default function InvestmentPage() {
     <div className="min-h-screen bg-slate-50 p-4 font-sans text-slate-900 flex flex-col">
       <div className="max-w-7xl mx-auto w-full space-y-4">
         
+        {/* Back Button */}
+        <div>
+          <Link href="/">
+            <Button variant="ghost" className="pl-0 -ml-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Home
+            </Button>
+          </Link>
+        </div>
+
         {/* Header */}
         <div className="flex items-center space-x-3 mb-2 px-1">
           <div className="p-2.5 bg-slate-900 rounded-xl shadow-lg">
@@ -183,6 +196,7 @@ export default function InvestmentPage() {
                       </label>
                       <input 
                         type="date" 
+                        value={formData.purchase_date}
                         className={INPUT_STYLES}
                         onChange={(e) => setFormData({...formData, purchase_date: e.target.value})} 
                       />
@@ -193,6 +207,7 @@ export default function InvestmentPage() {
                       </label>
                       <input 
                         type="date" 
+                        value={formData.sale_date}
                         className={INPUT_STYLES}
                         onChange={(e) => setFormData({...formData, sale_date: e.target.value})} 
                       />
@@ -211,6 +226,7 @@ export default function InvestmentPage() {
                         <span className="absolute left-3 top-2.5 text-slate-400 text-sm">₹</span>
                         <input 
                           type="number" 
+                          value={formData.purchase_price}
                           className={`${INPUT_STYLES} pl-7`}
                           placeholder="0"
                           onChange={(e) => setFormData({...formData, purchase_price: e.target.value})} 
@@ -225,6 +241,7 @@ export default function InvestmentPage() {
                         <span className="absolute left-3 top-2.5 text-slate-400 text-sm">₹</span>
                         <input 
                           type="number" 
+                          value={formData.sale_price}
                           className={`${INPUT_STYLES} pl-7`}
                           placeholder="0"
                           onChange={(e) => setFormData({...formData, sale_price: e.target.value})} 

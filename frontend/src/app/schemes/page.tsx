@@ -106,7 +106,7 @@ export default function SchemesPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-4 border-b border-zinc-900">
           <div className="space-y-4">
             <Link href="/">
-              <Button variant="ghost" className="pl-0 -ml-2 text-zinc-500 hover:text-white transition-colors hover:bg-transparent">
+              <Button variant="ghost" className="pl-0 -ml-2 text-zinc-500 hover:text-black transition-colors hover:bg-transparent">
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back to Home
               </Button>
             </Link>

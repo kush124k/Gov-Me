@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import Link from "next/link"; // Changed from lucide-react to next/link for navigation
 import { 
   BarChart, 
   Bar, 
@@ -18,19 +19,22 @@ import {
   Scale,
   CheckCircle2,
   Briefcase,
-  PiggyBank
+  PiggyBank,
+  ArrowLeft,
+  // Link as LinkIcon // If you need the Link icon, rename it to avoid collision
 } from "lucide-react";
 import { 
   Card, 
   CardContent, 
-  CardDescription, 
   CardHeader, 
   CardTitle,
+  CardDescription
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 
 // --- Types ---
 type FormData = {
@@ -133,6 +137,15 @@ export default function TaxPlanner() {
     <div className="min-h-screen bg-slate-50 p-4 font-sans text-slate-900 flex flex-col">
       <div className="max-w-7xl mx-auto w-full space-y-4">
         
+        {/* Back Button */}
+        <div>
+          <Link href="/">
+            <Button variant="ghost" className="pl-0 -ml-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Home
+            </Button>
+          </Link>
+        </div>
+
         {/* Header */}
         <div className="flex items-center space-x-3 mb-2 px-1">
           <div className="p-2.5 bg-slate-900 rounded-xl shadow-lg">
@@ -181,7 +194,6 @@ export default function TaxPlanner() {
                     
                     <div className="grid grid-cols-3 gap-3">
                       <div className="space-y-1">
-                        {/* REMOVED 'truncate' class here to fix tooltip */}
                         <label className="text-xs font-medium text-slate-600 flex items-center">
                           80C <InfoTooltip text="Investments in PPF, EPF, ELSS, LIC up to ₹1.5L" />
                         </label>
@@ -192,7 +204,6 @@ export default function TaxPlanner() {
                         />
                       </div>
                       <div className="space-y-1">
-                         {/* REMOVED 'truncate' class here to fix tooltip */}
                         <label className="text-xs font-medium text-slate-600 flex items-center">
                           Health <InfoTooltip text="Medical Insurance: ₹25k (Self) + ₹50k (Parents)" />
                         </label>
@@ -203,7 +214,6 @@ export default function TaxPlanner() {
                         />
                       </div>
                       <div className="space-y-1">
-                         {/* REMOVED 'truncate' class here to fix tooltip */}
                         <label className="text-xs font-medium text-slate-600 flex items-center">
                           NPS <InfoTooltip text="Exclusive ₹50k deduction for NPS Tier 1" />
                         </label>
@@ -226,7 +236,6 @@ export default function TaxPlanner() {
                     
                     <div className="grid grid-cols-3 gap-3">
                       <div className="space-y-1">
-                         {/* REMOVED 'truncate' class here to fix tooltip */}
                         <label className="text-xs font-medium text-slate-600 flex items-center">
                           LTCG <InfoTooltip text="Stocks held >1yr. Taxed at 12.5% > ₹1.25L" />
                         </label>
@@ -237,7 +246,6 @@ export default function TaxPlanner() {
                         />
                       </div>
                       <div className="space-y-1">
-                         {/* REMOVED 'truncate' class here to fix tooltip */}
                         <label className="text-xs font-medium text-slate-600 flex items-center">
                           STCG <InfoTooltip text="Stocks held <1yr. Taxed flat at 20%" />
                         </label>
@@ -248,15 +256,14 @@ export default function TaxPlanner() {
                         />
                       </div>
                       <div className="space-y-1">
-                          {/* REMOVED 'truncate' class here to fix tooltip */}
-                         <label className="text-xs font-medium text-slate-600 flex items-center">
+                          <label className="text-xs font-medium text-slate-600 flex items-center">
                            Rent <InfoTooltip text="Annual Rental Income (30% std deduction applied)" />
-                         </label>
-                         <input 
-                            {...register("rental_income")} 
-                            type="number" 
-                            className={`${INPUT_STYLES} focus:ring-indigo-500`} 
-                          />
+                          </label>
+                          <input 
+                             {...register("rental_income")} 
+                             type="number" 
+                             className={`${INPUT_STYLES} focus:ring-indigo-500`} 
+                           />
                       </div>
                     </div>
                   </div>
