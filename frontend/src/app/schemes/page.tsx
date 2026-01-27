@@ -112,7 +112,7 @@ export default function SchemesPage() {
             </Link>
             <div>
                 <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white">
-                  Scheme <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-600">Finder</span>
+                  Scheme <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 to-indigo-600">Finder</span>
                 </h1>
                 <p className="text-zinc-400 font-medium mt-2 max-w-xl">
                   Gov&Me Intelligence: Personalized discovery of citizen subsidies, rights, and entitlements.
@@ -304,7 +304,7 @@ function FilterSelect({ value, onChange, options }: any) {
             <SelectTrigger className="h-10 w-full bg-zinc-900 border-zinc-800 focus:ring-blue-500/20 text-white truncate">
                 <SelectValue className="truncate" />
             </SelectTrigger>
-            <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-200 max-h-[300px]">
+            <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-200 max-h-75">
                 {options.map((o: string) => (
                     <SelectItem key={o} value={o} className="focus:bg-zinc-800 focus:text-white cursor-pointer">
                         {o}

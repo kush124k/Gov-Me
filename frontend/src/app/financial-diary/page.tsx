@@ -17,16 +17,15 @@ import {
   Info,
   Scale,
   CheckCircle2,
-  XCircle,
-  PiggyBank,
-  Briefcase
+  Briefcase,
+  PiggyBank
 } from "lucide-react";
 import { 
   Card, 
   CardContent, 
+  CardDescription, 
   CardHeader, 
   CardTitle,
-  CardDescription 
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -57,6 +56,24 @@ type TaxResult = {
   details: any;
 };
 
+// --- Helper Components ---
+
+// Tooltip (Fixed: High Z-Index to avoid clipping)
+const InfoTooltip = ({ text }: { text: string }) => (
+  <div className="group relative inline-flex items-center ml-1.5 align-middle">
+    <Info className="w-3.5 h-3.5 text-slate-400 hover:text-slate-600 cursor-help transition-colors" />
+    {/* Tooltip Body */}
+    <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2.5 bg-slate-900 text-white text-xs rounded-lg shadow-xl z-[100] transition-all duration-200 pointer-events-none text-center leading-relaxed">
+      {text}
+      {/* Arrow */}
+      <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-900" />
+    </div>
+  </div>
+);
+
+// Input Style
+const INPUT_STYLES = "flex h-10 w-full rounded-md border border-slate-300 px-3 text-sm focus:ring-2 focus:ring-slate-900 focus:outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none";
+
 export default function TaxPlanner() {
   const [result, setResult] = useState<TaxResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -76,35 +93,16 @@ export default function TaxPlanner() {
   const onSubmit = async (data: FormData) => {
     setLoading(true);
     
-    // Transform UI data to Backend payload
     const payload = {
       gross_salary: Number(data.gross_salary),
       other_deductions_80c: Number(data.other_deductions_80c),
       health_insurance: Number(data.health_insurance),
       nps_voluntary: Number(data.nps_voluntary),
       investments: [
-        {
-          asset_name: "Equity Portfolio (LTCG)",
-          buy_price: 0,
-          sell_price: Number(data.equity_ltcg_profit),
-          asset_type: "equity",
-          is_long_term: true
-        },
-        {
-          asset_name: "Equity Portfolio (STCG)",
-          buy_price: 0,
-          sell_price: Number(data.equity_stcg_profit),
-          asset_type: "equity",
-          is_long_term: false
-        }
+        { asset_name: "Equity Portfolio (LTCG)", buy_price: 0, sell_price: Number(data.equity_ltcg_profit), asset_type: "equity", is_long_term: true },
+        { asset_name: "Equity Portfolio (STCG)", buy_price: 0, sell_price: Number(data.equity_stcg_profit), asset_type: "equity", is_long_term: false }
       ],
-      properties: data.rental_income > 0 ? [{
-        property_name: "Rented House",
-        rental_income: Number(data.rental_income),
-        municipal_taxes: 0,
-        loan_interest: 0,
-        is_self_occupied: false
-      }] : []
+      properties: data.rental_income > 0 ? [{ property_name: "Rented House", rental_income: Number(data.rental_income), municipal_taxes: 0, loan_interest: 0, is_self_occupied: false }] : []
     };
 
     try {
@@ -122,91 +120,97 @@ export default function TaxPlanner() {
     }
   };
 
-  // Helper for formatting currency
   const formatCurrency = (amount: number) => 
     new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(amount);
 
-  // Derived state for UI styling & Analysis
   const isOldBetter = result?.summary.best_regime === "Old";
   const grossSalary = Number(watch("gross_salary"));
   
-  // Calculate total deductions entered by user (for the Strategy Tab)
-  const totalDeductions = Number(watch("other_deductions_80c")) + Number(watch("health_insurance")) + Number(watch("nps_voluntary")) + 50000; // Adding std deduction
+  const totalDeductions = Number(watch("other_deductions_80c")) + Number(watch("health_insurance")) + Number(watch("nps_voluntary")) + 50000;
   const tippingPoint = 375000;
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="min-h-screen bg-slate-50 p-4 font-sans text-slate-900 flex flex-col">
+      <div className="max-w-7xl mx-auto w-full space-y-4">
         
         {/* Header */}
-        <div className="flex items-center space-x-3 mb-8">
-          <div className="p-3 bg-slate-900 rounded-xl shadow-lg">
-            <Calculator className="w-8 h-8 text-white" />
+        <div className="flex items-center space-x-3 mb-2 px-1">
+          <div className="p-2.5 bg-slate-900 rounded-xl shadow-lg">
+            <Calculator className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Financial Diary</h1>
-            <p className="text-slate-500">Interactive Tax Planning & Strategy</p>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900">Financial Diary</h1>
+            <p className="text-sm text-slate-500">Interactive Tax Planning & Strategy</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
-          {/* LEFT COLUMN: INPUT FORM */}
-          <div className="lg:col-span-4 space-y-6">
+          {/* LEFT COLUMN */}
+          <div className="lg:col-span-4">
             <Card className="border-t-4 border-t-slate-900 shadow-md">
-              <CardHeader className="bg-slate-50/50 border-b border-slate-100 pb-4">
-                <CardTitle className="text-lg flex items-center text-slate-700">
+              <CardHeader className="bg-slate-50/50 border-b border-slate-100 py-3">
+                <CardTitle className="text-base flex items-center text-slate-700">
                   <Wallet className="w-5 h-5 mr-2 text-slate-500" />
                   Your Profile
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-0">
-                <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
+                <form onSubmit={handleSubmit(onSubmit)} className="p-5 space-y-5">
                   
                   {/* Salary Section */}
-                  <div className="space-y-4">
-                    <label className="block text-sm font-semibold text-slate-700">Gross Annual Salary</label>
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-slate-700">Gross Annual Salary</label>
                     <div className="relative">
-                      <span className="absolute left-3 top-2.5 text-slate-400">₹</span>
+                      <span className="absolute left-3 top-2.5 text-slate-400 text-sm">₹</span>
                       <input 
                         {...register("gross_salary")}
                         type="number" 
-                        className="flex h-10 w-full rounded-md border border-slate-300 pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-slate-900 focus:outline-none transition-all"
+                        className={`${INPUT_STYLES} pl-7 focus:ring-slate-900`}
                       />
                     </div>
                   </div>
 
                   <Separator />
 
-                  {/* Deductions Section */}
-                  <div className="space-y-4">
+                  {/* Deductions (Horizontal Row) */}
+                  <div className="space-y-3">
                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center">
                       <ShieldCheck className="w-3 h-3 mr-1" /> Old Regime Shields
                     </h3>
                     
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <label className="text-xs font-medium text-slate-600">80C (Max 1.5L)</label>
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="space-y-1">
+                        {/* REMOVED 'truncate' class here to fix tooltip */}
+                        <label className="text-xs font-medium text-slate-600 flex items-center">
+                          80C <InfoTooltip text="Investments in PPF, EPF, ELSS, LIC up to ₹1.5L" />
+                        </label>
                         <input 
                           {...register("other_deductions_80c")}
                           type="number" 
-                          className="flex h-9 w-full rounded-md border border-slate-300 px-3 text-sm focus:ring-emerald-500 transition-all"
+                          className={`${INPUT_STYLES} focus:ring-emerald-500`}
                         />
                       </div>
-                      <div className="space-y-2">
-                        <label className="text-xs font-medium text-slate-600">Health Ins. (80D)</label>
+                      <div className="space-y-1">
+                         {/* REMOVED 'truncate' class here to fix tooltip */}
+                        <label className="text-xs font-medium text-slate-600 flex items-center">
+                          Health <InfoTooltip text="Medical Insurance: ₹25k (Self) + ₹50k (Parents)" />
+                        </label>
                         <input 
                           {...register("health_insurance")}
                           type="number" 
-                          className="flex h-9 w-full rounded-md border border-slate-300 px-3 text-sm focus:ring-emerald-500 transition-all"
+                          className={`${INPUT_STYLES} focus:ring-emerald-500`}
                         />
                       </div>
-                      <div className="space-y-2 col-span-2">
-                        <label className="text-xs font-medium text-slate-600">NPS (Voluntary)</label>
+                      <div className="space-y-1">
+                         {/* REMOVED 'truncate' class here to fix tooltip */}
+                        <label className="text-xs font-medium text-slate-600 flex items-center">
+                          NPS <InfoTooltip text="Exclusive ₹50k deduction for NPS Tier 1" />
+                        </label>
                         <input 
                           {...register("nps_voluntary")}
                           type="number" 
-                          className="flex h-9 w-full rounded-md border border-slate-300 px-3 text-sm focus:ring-emerald-500 transition-all"
+                          className={`${INPUT_STYLES} focus:ring-emerald-500`}
                         />
                       </div>
                     </div>
@@ -214,24 +218,45 @@ export default function TaxPlanner() {
 
                   <Separator />
 
-                  {/* Other Income */}
-                  <div className="space-y-4">
+                  {/* Wealth (Horizontal Row) */}
+                  <div className="space-y-3">
                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center">
                       <TrendingUp className="w-3 h-3 mr-1" /> Wealth & Gains
                     </h3>
                     
-                    <div className="space-y-3 bg-slate-50 p-3 rounded-lg border border-slate-100">
-                      <div className="flex items-center justify-between">
-                        <label className="text-xs text-slate-600">LTCG (Stocks)</label>
-                        <input {...register("equity_ltcg_profit")} type="number" className="w-24 h-8 text-right border rounded px-2 text-sm focus:ring-indigo-500" />
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="space-y-1">
+                         {/* REMOVED 'truncate' class here to fix tooltip */}
+                        <label className="text-xs font-medium text-slate-600 flex items-center">
+                          LTCG <InfoTooltip text="Stocks held >1yr. Taxed at 12.5% > ₹1.25L" />
+                        </label>
+                        <input 
+                          {...register("equity_ltcg_profit")} 
+                          type="number" 
+                          className={`${INPUT_STYLES} focus:ring-indigo-500`} 
+                        />
                       </div>
-                      <div className="flex items-center justify-between">
-                        <label className="text-xs text-slate-600">STCG (Stocks)</label>
-                        <input {...register("equity_stcg_profit")} type="number" className="w-24 h-8 text-right border rounded px-2 text-sm focus:ring-indigo-500" />
+                      <div className="space-y-1">
+                         {/* REMOVED 'truncate' class here to fix tooltip */}
+                        <label className="text-xs font-medium text-slate-600 flex items-center">
+                          STCG <InfoTooltip text="Stocks held <1yr. Taxed flat at 20%" />
+                        </label>
+                        <input 
+                          {...register("equity_stcg_profit")} 
+                          type="number" 
+                          className={`${INPUT_STYLES} focus:ring-indigo-500`} 
+                        />
                       </div>
-                      <div className="flex items-center justify-between">
-                         <label className="text-xs text-slate-600">Rental Income</label>
-                         <input {...register("rental_income")} type="number" className="w-24 h-8 text-right border rounded px-2 text-sm focus:ring-indigo-500" />
+                      <div className="space-y-1">
+                          {/* REMOVED 'truncate' class here to fix tooltip */}
+                         <label className="text-xs font-medium text-slate-600 flex items-center">
+                           Rent <InfoTooltip text="Annual Rental Income (30% std deduction applied)" />
+                         </label>
+                         <input 
+                            {...register("rental_income")} 
+                            type="number" 
+                            className={`${INPUT_STYLES} focus:ring-indigo-500`} 
+                          />
                       </div>
                     </div>
                   </div>
@@ -302,7 +327,7 @@ export default function TaxPlanner() {
                     <TabsTrigger value="breakdown">Detailed Table</TabsTrigger>
                   </TabsList>
 
-                  {/* TAB 1: STRATEGY (The "Why") */}
+                  {/* TAB 1: STRATEGY */}
                   <TabsContent value="strategy" className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* The Tipping Point Logic */}
@@ -368,7 +393,7 @@ export default function TaxPlanner() {
                     </div>
                   </TabsContent>
 
-                  {/* TAB 2: TAX SHIELD (Visualizing Deductions) */}
+                  {/* TAB 2: TAX SHIELD */}
                   <TabsContent value="shield">
                     <Card className="border-t-4 border-t-emerald-500">
                         <CardHeader>
