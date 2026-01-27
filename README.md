@@ -1,4 +1,4 @@
-# Gov-Me: Policy Impact Visualizer 🏛️ 📊
+# Gov&Me: Policy Impact Visualizer 🏛️ 📊
 
 > **Bridging the gap between complex government policies and public understanding.**
 
